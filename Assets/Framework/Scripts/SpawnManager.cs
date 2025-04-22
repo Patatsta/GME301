@@ -10,16 +10,16 @@ public class SpawnManager : MonoBehaviour
         get
         {
             if (_instance == null)
-            {
                 Debug.Log("SpawnManager is NULL");
-            }
             return _instance;
         }
     }
 
     [SerializeField] private Transform _monsterPrefab;
     [SerializeField] private Transform _spawnPosition;
+    [SerializeField] private Transform _endPoint;
     [SerializeField] private int _poolSize = 10;
+    [SerializeField] private List<Transform> _HidePoints = new List<Transform>();
 
     [SerializeField] private List<Transform> _monsterPool = new List<Transform>();
 
@@ -27,7 +27,6 @@ public class SpawnManager : MonoBehaviour
     {
         _instance = this;
 
-        // Pool initialisieren
         for (int i = 0; i < _poolSize; i++)
         {
             Transform monster = Instantiate(_monsterPrefab, Vector3.zero, Quaternion.identity);
@@ -46,7 +45,7 @@ public class SpawnManager : MonoBehaviour
         while (true)
         {
             SpawnMonster();
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(3f); 
         }
     }
 
@@ -56,7 +55,6 @@ public class SpawnManager : MonoBehaviour
         {
             if (!monster.gameObject.activeInHierarchy)
             {
-                print("Spawn");
                 monster.position = _spawnPosition.position;
                 monster.rotation = Quaternion.identity;
                 monster.gameObject.SetActive(true);
@@ -64,8 +62,7 @@ public class SpawnManager : MonoBehaviour
             }
         }
 
-    
-        print("ADD");
+       
         Transform monsterAddition = Instantiate(_monsterPrefab, Vector3.zero, Quaternion.identity);
         _monsterPool.Add(monsterAddition);
         monsterAddition.position = _spawnPosition.position;
@@ -73,4 +70,13 @@ public class SpawnManager : MonoBehaviour
         monsterAddition.gameObject.SetActive(true);
     }
 
+    public Transform RequestNextPoint(int index)
+    {
+        if (index >= _HidePoints.Count)
+        {
+            return _endPoint;
+        }
+        return _HidePoints[index];
+    }
 }
+

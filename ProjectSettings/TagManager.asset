@@ -8,6 +8,7 @@ TagManager:
   - Capsule
   - Floor
   - Wall
+  - Enemy
   layers:
   - Default
   - TransparentFX

@@ -384,9 +384,10 @@ GameObject:
   - component: {fileID: 2953344358568807979}
   - component: {fileID: -6482129467459320487}
   - component: {fileID: 7638963065259516193}
+  - component: {fileID: 3465266879531720294}
   m_Layer: 0
   m_Name: Walking
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -400,7 +401,7 @@ Transform:
   m_GameObject: {fileID: 2611255291745280878}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 2532046117553389679}
   - {fileID: 7680679605008200348}
@@ -415,7 +416,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2611255291745280878}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 1701cd26f3a28554186f22e0ac46392c, type: 2}
   m_CullingMode: 0
@@ -462,7 +463,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5dea4f983b66a548994652c232e52b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _EndPosition: {fileID: 0}
+  _points: 50
+--- !u!136 &3465266879531720294
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2611255291745280878}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.59086156
+  m_Height: 2.5869334
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.7934667, z: 0.090861574}
 --- !u!1 &2705188514648540695
 GameObject:
   m_ObjectHideFlags: 0
