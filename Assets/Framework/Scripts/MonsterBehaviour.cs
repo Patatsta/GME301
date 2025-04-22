@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -9,7 +10,7 @@ public class MonsterBehaviour : MonoBehaviour
     private bool _justActivated = false;
     private int _destinationIndex = -1;
     [SerializeField] private int _points = 50;
-
+    private Animator _anim;
     private enum _monsterStates
     {
         Running,
@@ -18,23 +19,26 @@ public class MonsterBehaviour : MonoBehaviour
     }
     private _monsterStates _currentState;
 
-    void Start()
+    private void Start()
     {
+        _anim = GetComponent<Animator>();
         _agent = GetComponent<NavMeshAgent>();
     }
-
-    private void OnEnable()
+    void OnEnable()
     {
         _justActivated = true;
-        _agent = GetComponent<NavMeshAgent>(); 
+        _agent = GetComponent<NavMeshAgent>();
         _agent.isStopped = false;
         _destinationIndex = -1;
         _currentState = _monsterStates.Running;
         SetDestination();
     }
 
+
     private void Update()
     {
+        _anim.SetFloat("Speed", _agent.velocity.magnitude);
+
         if (_justActivated)
         {
             _justActivated = false;
@@ -70,6 +74,8 @@ public class MonsterBehaviour : MonoBehaviour
     {
         _currentState = _monsterStates.Running;
         _destinationIndex++;
+        _agent.isStopped = false;
+        
         Transform nextPoint = SpawnManager.Instance.RequestNextPoint(_destinationIndex);
         if (nextPoint != null)
         {
@@ -82,7 +88,7 @@ public class MonsterBehaviour : MonoBehaviour
      
         float randomWait = Random.Range(2, 4);
         yield return new WaitForSeconds(randomWait);
-        _agent.isStopped = false;
+     
         SetDestination();
     }
 
@@ -97,5 +103,6 @@ public class MonsterBehaviour : MonoBehaviour
     private void SetInactive()
     {
         gameObject.SetActive(false);
+        _destinationIndex = -1;
     }
 }

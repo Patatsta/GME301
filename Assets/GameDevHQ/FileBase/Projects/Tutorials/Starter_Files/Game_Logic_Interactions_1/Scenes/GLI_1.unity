@@ -4343,7 +4343,6 @@ MonoBehaviour:
   _spawnPosition: {fileID: 1736555793}
   _endPoint: {fileID: 183603786}
   _poolSize: 10
-  _monsterPool: []
   _HidePoints:
   - {fileID: 1318247954}
   - {fileID: 1135814942}
@@ -4352,6 +4351,7 @@ MonoBehaviour:
   - {fileID: 223065634}
   - {fileID: 1258865530}
   - {fileID: 888258124}
+  _monsterPool: []
 --- !u!4 &252390624
 Transform:
   m_ObjectHideFlags: 0
