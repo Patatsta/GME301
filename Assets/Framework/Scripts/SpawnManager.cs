@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
@@ -22,6 +23,8 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private List<Transform> _HidePoints = new List<Transform>();
 
     [SerializeField] private List<Transform> _monsterPool = new List<Transform>();
+
+    private List<Transform> _activeEnemies = new List<Transform>();   
 
     private void Awake()
     {
@@ -58,6 +61,8 @@ public class SpawnManager : MonoBehaviour
                 monster.position = _spawnPosition.position;
                 monster.rotation = Quaternion.identity;
                 monster.gameObject.SetActive(true);
+                _activeEnemies.Add(monster);
+                UIManager.Instance.UpdateEnemyCount(_activeEnemies.Count);
                 return;
             }
         }
@@ -68,6 +73,10 @@ public class SpawnManager : MonoBehaviour
         monsterAddition.position = _spawnPosition.position;
         monsterAddition.rotation = Quaternion.identity;
         monsterAddition.gameObject.SetActive(true);
+        _poolSize++;
+
+        _activeEnemies.Add(monsterAddition);
+        UIManager.Instance.UpdateEnemyCount(_activeEnemies.Count);
     }
 
     public Transform RequestNextPoint(int index)
