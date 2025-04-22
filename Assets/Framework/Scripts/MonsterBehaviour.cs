@@ -11,6 +11,8 @@ public class MonsterBehaviour : MonoBehaviour
     private int _destinationIndex = -1;
     [SerializeField] private int _points = 50;
     private Animator _anim;
+    private AudioSource _audioSource;
+    private Collider _collider;
     private enum _monsterStates
     {
         Running,
@@ -19,14 +21,18 @@ public class MonsterBehaviour : MonoBehaviour
     }
     private _monsterStates _currentState;
 
-    private void Start()
+    private void Awake()
     {
+        _collider = GetComponent<Collider>();
+        _audioSource = GetComponent<AudioSource>();
         _anim = GetComponent<Animator>();
         _agent = GetComponent<NavMeshAgent>();
     }
+
     void OnEnable()
     {
         _justActivated = true;
+        _collider.enabled = true;
         _agent = GetComponent<NavMeshAgent>();
         _agent.isStopped = false;
         _destinationIndex = -1;
@@ -94,10 +100,13 @@ public class MonsterBehaviour : MonoBehaviour
 
     public void Shot()
     {
+        _collider.enabled = false;
+        _anim.SetBool("Death", true);
+        _audioSource.Play();
         _agent.isStopped = true;
         _currentState = _monsterStates.Death;
         GameManager.Instance.AddScore(_points);
-        Invoke(nameof(SetInactive), 0.5f);
+        Invoke(nameof(SetInactive), 2f);
     }
 
     private void SetInactive()
