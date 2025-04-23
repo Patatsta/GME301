@@ -13,6 +13,9 @@ public class MonsterBehaviour : MonoBehaviour
     private Animator _anim;
     private AudioSource _audioSource;
     private Collider _collider;
+
+    [SerializeField] private float _hideMin = 0.1f;
+    [SerializeField] private float _hideMax = 0.2f;
     private enum _monsterStates
     {
         Running,
@@ -39,7 +42,11 @@ public class MonsterBehaviour : MonoBehaviour
         _currentState = _monsterStates.Running;
         SetDestination();
     }
-
+    private void Start()
+    {
+        float randomSize = Random.Range(1.6f, 2);
+        transform.localScale = new Vector3(randomSize,randomSize,randomSize);
+    }
 
     private void Update()
     {
@@ -92,7 +99,7 @@ public class MonsterBehaviour : MonoBehaviour
     IEnumerator HidingRoutine()
     {
      
-        float randomWait = Random.Range(2, 4);
+        float randomWait = Random.Range(_hideMin, _hideMax);
         yield return new WaitForSeconds(randomWait);
      
         SetDestination();
@@ -109,9 +116,12 @@ public class MonsterBehaviour : MonoBehaviour
         Invoke(nameof(SetInactive), 2f);
     }
 
-    private void SetInactive()
+    public void SetInactive()
     {
+        SpawnManager.Instance.RemoveActiveEnemy(this.transform);
         gameObject.SetActive(false);
         _destinationIndex = -1;
     }
+
+    
 }

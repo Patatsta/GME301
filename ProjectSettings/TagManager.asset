@@ -9,6 +9,7 @@ TagManager:
   - Floor
   - Wall
   - Enemy
+  - Barrel
   layers:
   - Default
   - TransparentFX

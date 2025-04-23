@@ -24,8 +24,9 @@ public class SpawnManager : MonoBehaviour
 
     [SerializeField] private List<Transform> _monsterPool = new List<Transform>();
 
-    private List<Transform> _activeEnemies = new List<Transform>();   
+    private List<Transform> _activeEnemies = new List<Transform>();
 
+    [SerializeField] private float _spawnCD = 3f;
     private void Awake()
     {
         _instance = this;
@@ -48,7 +49,7 @@ public class SpawnManager : MonoBehaviour
         while (true)
         {
             SpawnMonster();
-            yield return new WaitForSeconds(3f); 
+            yield return new WaitForSeconds(_spawnCD); 
         }
     }
 
@@ -62,7 +63,7 @@ public class SpawnManager : MonoBehaviour
                 monster.rotation = Quaternion.identity;
                 monster.gameObject.SetActive(true);
                 _activeEnemies.Add(monster);
-                UIManager.Instance.UpdateEnemyCount(_activeEnemies.Count);
+             
                 return;
             }
         }
@@ -76,7 +77,7 @@ public class SpawnManager : MonoBehaviour
         _poolSize++;
 
         _activeEnemies.Add(monsterAddition);
-        UIManager.Instance.UpdateEnemyCount(_activeEnemies.Count);
+      
     }
 
     public Transform RequestNextPoint(int index)
@@ -86,6 +87,20 @@ public class SpawnManager : MonoBehaviour
             return _endPoint;
         }
         return _HidePoints[index];
+    }
+
+    public void GameEnd()
+    {
+        StopAllCoroutines();
+        foreach (Transform monster in _activeEnemies)
+        {
+            monster.gameObject.SetActive(false);
+        }
+    }
+
+    public void RemoveActiveEnemy(Transform enemy)
+    {
+        _activeEnemies.Remove(enemy);
     }
 }
 

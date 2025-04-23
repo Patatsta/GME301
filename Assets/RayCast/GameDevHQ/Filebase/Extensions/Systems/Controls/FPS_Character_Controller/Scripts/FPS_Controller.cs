@@ -42,6 +42,8 @@ namespace GameDevHQ.FileBase.Plugins.FPS_Character_Controller
         private float _lookSensitivity = 5.0f; //mouse sensitivity 
 
         private Camera _fpsCamera;
+
+        public bool isGameOver = false;   
         private void Start()
         {
             _controller = GetComponent<CharacterController>(); //assign the reference variable to the component
@@ -52,6 +54,10 @@ namespace GameDevHQ.FileBase.Plugins.FPS_Character_Controller
 
         private void Update()
         {
+            if (isGameOver)
+            {
+                return;
+            }
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 Cursor.lockState = CursorLockMode.None;

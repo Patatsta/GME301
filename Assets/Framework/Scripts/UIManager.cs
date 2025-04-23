@@ -19,7 +19,7 @@ public class UIManager : MonoBehaviour
     }
 
     [SerializeField] private TMP_Text _timer;
-    [SerializeField] private TMP_Text _enemyCount;
+    [SerializeField] private TMP_Text _hp;
     [SerializeField] private TMP_Text _score;
 
     private void Awake()
@@ -28,22 +28,23 @@ public class UIManager : MonoBehaviour
     }
     private void Start()
     {
-        _enemyCount.text = "Enemies " + 0;
-        _score.text = "Score " + 0;
+      
+        _score.text = 0.ToString();
     }
 
     public void UpdateScore(int score)
     {
-        _score.text = "Score " + score;
+        _score.text = score.ToString();
     }
 
-    public void UpdateEnemyCount(int enemy)
+    public void UpdateHP(int hp)
     {
-        _enemyCount.text = "Enemies " + enemy;
+       
+        _hp.text = "HP " + hp.ToString();
     }
 
     public void UpdateTimer(float time)
     {
-        _timer.text = time.ToString();
+        _timer.text = time.ToString("F1") + " s";
     }
 }
