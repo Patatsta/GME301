@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
+        Cursor.lockState = CursorLockMode.Locked;
         _audioSource = GetComponent<AudioSource>();
         _currenthp = _maxHP;
         _currentTime = _startTime;

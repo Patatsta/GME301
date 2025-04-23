@@ -466,8 +466,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _points: 50
-  _hideMin: 0.3
-  _hideMax: 0.7
+  _hideMin: 0.7
+  _hideMax: 1
 --- !u!136 &3465266879531720294
 CapsuleCollider:
   m_ObjectHideFlags: 0

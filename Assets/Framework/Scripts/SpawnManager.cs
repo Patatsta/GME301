@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using TMPro;
 using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
@@ -27,6 +28,8 @@ public class SpawnManager : MonoBehaviour
     private List<Transform> _activeEnemies = new List<Transform>();
 
     [SerializeField] private float _spawnCD = 3f;
+
+    [SerializeField] private TMP_Text _countDown;
     private void Awake()
     {
         _instance = this;
@@ -41,11 +44,20 @@ public class SpawnManager : MonoBehaviour
 
     private void Start()
     {
+       
         StartCoroutine(SpawnRoutine());
     }
 
     private IEnumerator SpawnRoutine()
     {
+        for(int i = 3; i > 0; i--)
+        {           
+            _countDown.text = i.ToString();
+            yield return new WaitForSeconds(1);
+        }
+
+        _countDown.text = "";
+      
         while (true)
         {
             SpawnMonster();
@@ -60,7 +72,7 @@ public class SpawnManager : MonoBehaviour
             if (!monster.gameObject.activeInHierarchy)
             {
                 monster.position = _spawnPosition.position;
-                monster.rotation = Quaternion.identity;
+                monster.rotation = _spawnPosition.rotation;
                 monster.gameObject.SetActive(true);
                 _activeEnemies.Add(monster);
              
@@ -72,7 +84,7 @@ public class SpawnManager : MonoBehaviour
         Transform monsterAddition = Instantiate(_monsterPrefab, Vector3.zero, Quaternion.identity);
         _monsterPool.Add(monsterAddition);
         monsterAddition.position = _spawnPosition.position;
-        monsterAddition.rotation = Quaternion.identity;
+        monsterAddition.rotation = _spawnPosition.rotation;
         monsterAddition.gameObject.SetActive(true);
         _poolSize++;
 
